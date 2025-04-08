@@ -1,7 +1,17 @@
 import app from 'flarum/forum/app';
+import { extend } from 'flarum/common/extend';
+import LoginModal from 'flarum/forum/components/LoginModal';
 
-export { default as extend } from './extend';
+extend(LoginModal.prototype, 'footer', function (items:any) {
+  const customLink = 'https://findtheseven.com/forgot-password';
 
-app.initializers.add('farzoqe-fts-forgot-password', () => {
-  console.log('[farzoqe/flarum-fts-forgot-password] Hello, forum!');
+  items.replace('forgotPassword', m(
+    'a',
+    {
+      href: customLink,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    },
+    app.translator.trans('core.forum.login.forgot_password_link')
+  ));
 });
